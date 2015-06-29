@@ -1,5 +1,7 @@
 import math
 
+#['__abs__', '__add__', '__div__', '__divmod__', '__eq__', '__float__', '__floordiv__', '__ge__', '__gt__', '__int__', '__le__', '__long__', '__lt__', '__mod__', '__mul__', '__ne__', '__neg__', '__nonzero__', '__pow__', '__radd__', '__rdiv__', '__rdivmod__', '__repr__', '__rfloordiv__', '__rmod__', '__rmul__', '__rpow__', '__rsub__', '__rtruediv__', '__str__', '__sub__', '__truediv__', '__trunc__', 'as_integer_ratio', 'conjugate', 'imag', 'is_integer', 'real']
+
 # split a string into mathematical tokens
 # returns a list of numbers, operators, parantheses and commas
 # output will not contain spaces
@@ -36,11 +38,7 @@ def isnumber(string):
 
 # check if a string represents an integer value        
 def isint(string):
-    try:
-        int(string)
-        return True
-    except ValueError:
-        return False
+    return string.isalnum()
 
 class Expression():
     """A mathematical expression, represented as an expression tree"""
@@ -114,7 +112,7 @@ class Expression():
                 # let eval and operator overloading take care of figuring out what to do
                 y = stack.pop()
                 x = stack.pop()
-                stack.append(eval('x %s y' % t))
+                stack.append(eval('x %s y' % t)) # SERIOUSLY!?
             else:
                 # a constant, push it to the stack
                 stack.append(t)
