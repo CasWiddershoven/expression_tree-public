@@ -12,5 +12,5 @@ class Abs(Expr):
 		return Trunc(self)
 		
 	@property	
-	def value(self):
-		return abs(self.expr.value())
+	def value(self, **kwargs):
+		return abs(self.expr.value(**kwargs))
