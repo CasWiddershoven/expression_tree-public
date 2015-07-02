@@ -17,5 +17,5 @@ class Cos(Expr):
 		return Mul(Mul(Const(-1), self.expr.derivative(to)), Sin(self.expr)__neg__())
 		
 	@property	
-	def value(self):
-		return  cos(self.expr.value())
+	def value(self, **kwargs):
+		return  cos(self.expr.value(**kwargss))

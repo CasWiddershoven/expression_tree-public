@@ -17,5 +17,5 @@ class Sin(Expr):
 		return mul(self.expr.derivative(to), Cos(self.expr))
 		
 	@property	
-	def value(self):
-		return sin(self.expr.value())
+	def value(self, **kwargs):
+		return sin(self.expr.value(**kwargs))
