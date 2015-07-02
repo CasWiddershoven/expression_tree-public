@@ -31,22 +31,22 @@ class Expr(object):
 		return FloorDiv(self, other)
 		
 	def __ge__(self, other, **kwargs):
-		return self.value(**kwargs) >= other.value(**kwargs)
+		return not self.__lt__(other, kwargs)
 		
 	def __gt__(self, other, **kwargs):
-		return self.value(**kwargs) > other.value(**kwargs)
+		return not self.__le__(other, kwargs)
 		
 	def __int__(self, **kwargs):
 		return int(self.value(**kwargs))
 		
 	def __le__(self, other, **kwargs):
-		return self.value(**kwargs) <= other.value(**kwargs)
+		return self.__lt__(other, kwargs) or self.__eq__(other, kwargs)
 		
-	def __long__(self):
-		return long(self.value())
+	def __long__(self, **kwargs):
+		return long(self.value(**kwargs))
 		
-	def __lt__(self, other):
-		return self.value() < other.value()
+	def __lt__(self, other, **kwargs):
+		return self.value(**kwargs) < other.value(**kwargs)
 		
 	def __mod__(self, other):
 		from mod import mod
@@ -57,7 +57,7 @@ class Expr(object):
 		return Mul(self, other)
 		
 	def __ne__(self, other, **kwargs):
-		return self.value(**kwargs) != other.value(**kwargs)
+		return not self.__eq__(other, kwargs)
 		
 	def __neg__(self, **kwargs):
 		from mul import Mul
@@ -129,7 +129,8 @@ class Expr(object):
 		return self.value(**kwargs).as_integer_ratio()
 		
 	def conjugate(self, **kwargs):
-		return Expr(str(self.value(**kwargs).conjugate()))
+		from mul import Mul
+		return self - Mul(self.imag(kwargs), Const(2))
 		
 	@property
 	def imag(self, **kwargs):

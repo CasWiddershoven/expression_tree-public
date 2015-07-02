@@ -10,31 +10,34 @@ class FloorDiv(Expr):
 		return FloorDiv(self.lhs.__neg__(), self.rhs)
 		
 	def __repr__(self):
-		return "|_({})/({})_|".format(lhs, rhs)
+		return "|_({})/({})_|".format(self.lhs, self.rhs)
 		
 	def __str__(self):
-		return "|_({})/({})_|".format(lhs, rhs)
+		return "|_({})/({})_|".format(self.lhs, self.rhs)
 		
 	def __trunc__(self):
 		return self
 		
 	def conjugate(self):
-		from trunc import Trunc
-		return Trunc(Div(self.lhs, self.rhs).conjugate())
-	
-	#TODO: is the derivative of FloorDiv the floor of the derivative of the div?
-	def derivative(self, to = "x"):
-		from trunc import Trunc
-		from div import Div
-		return Trunc(Div(self.lhs, self.rhs).derivative(to))
+		return FloorDiv(self.lhs.conjugate(), self.rhs.conjugate())
 
-	#TODO: This can't be right, either. Also, imag is missing.
 	@property
-	def real(self):
-		from add import Add
-		return Add(self.lhs, self.rhs)
+	def imag(self, **kwargs):
+		from div import Div
+		from trunc import Trunc
+		return Trunc(Div(self.lhs, self.rhs).imag(kwargs))
+
+	@property
+	def real(self, **kwargs):
+		from div import Div
+		from trunc import Trunc
+		return Trunc(Div(self.lhs, self.rhs).real(kwargs))
 		
 	def value(self):
 		from trunc import Trunc
 		from div import Div
 		return Trunc(Div(self.lhs, self.rhs)).value()
+	
+	def derivative(self, to = "x"):
+		from nserror import NotSupportedError
+		raise NotSupportedError("You can't take the derivative of a non-continuous function!")

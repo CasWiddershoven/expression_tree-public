@@ -1,6 +1,7 @@
 from expr import Expr
 
 class Const(Expr):
+	""" A constant value """
 	def __init__(self, val, *args, **kwargs):
 		super(Const, self).__init__(*args, **kwargs)
 		
@@ -9,16 +10,22 @@ class Const(Expr):
 	def __neg__(self):
 		return Const(-self.val)
 		
+	def __repr__(self):
+		return str(self.val)
+		
+	def __str__(self):
+		return str(self.val)
+		
 	@property
 	def imag(self):
-		return self.val.imag
-		
-	def derivative(self, to = "x"):
-		return Const(0)
+		return Const(self.val.imag)
 		
 	@property
 	def real(self):
-		return self.val.real
+		return Const(self.val.real)
 		
 	def value(self, **kwargs):
 		return self.val
+		
+	def derivative(self, to = "x"):
+		return Const(0)

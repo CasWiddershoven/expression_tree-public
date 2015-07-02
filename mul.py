@@ -10,10 +10,10 @@ class Mul(Expr):
 		return Mul(self.lhs.__neg__(), self.rhs)
 		
 	def __repr__(self):
-		return "({})*({})".format(lhs, rhs)
+		return "({})*({})".format(self.lhs, self.rhs)
 		
 	def __str__(self):
-		return "({})*({})".format(lhs, rhs)
+		return "({})*({})".format(self.lhs, self.rhs)
 		
 	def conjugate(self):
 		return Mul(self.lhs.conjugate(), self.rhs.conjugate())
@@ -23,12 +23,14 @@ class Mul(Expr):
 		return Add(Mul(self.lhs.derivative(to), self.rhs), Mul(self.lhs, self.rhs.derivative(to)))
 		
 	@property
-	def imag(self):
-		return Mul(self.lhs.imag, self.rhs.imag)
+	def imag(self, **kwargs):
+		from add import Add
+		return Add(Mul(self.lhs.imag(kwargs), self.rhs.real(kwargs)), Mul(self.lhs.real(kwargs), self.rhs.imag(kwargs)))
 		
 	@property
-	def real(self):
-		return Mul(self.lhs.real, self.rhs.real)
+	def real(self, **kwargs):
+		from sub import Sub
+		return Sub(Mul(self.lhs.real(kwargs), self.rhs.real(kwargs)), Mul(self.lhs.imag(kwargs), self.rhs.imag(kwargs)))
 		
 	def value(self, **kwargs):
 		return self.lhs.value(**kwargs) * self.rhs.value(**kwargs)

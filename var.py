@@ -6,6 +6,12 @@ class Var(Expr):
 		
 		self.key = key
 		
+	def __repr__(self):
+		return self.key
+		
+	def __str__(self):
+		return self.key
+		
 	def value(self, **kwargs):
 		if kwargs is not None and self.key in kwargs.keys():
 			return kwargs[self.key]

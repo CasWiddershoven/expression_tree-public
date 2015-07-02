@@ -32,12 +32,6 @@ class Log(Expr):
 		from trunc import Trunc
 		return Trunc(self)
 	
-	##what the fiesh?
-	def conjugate(self):
-		from mul import Mul
-		return Mul(self.lhs.conjugate(), self.rhs.conjugate())
-	
-	
 	def derivative(self, to = "x"):
 		from div import Div
 		if(self.rhs.value() == e):
@@ -45,17 +39,22 @@ class Log(Expr):
 			return Div(self.lhs.derivative(to), self.lhs)
 		return Div(Log(self.lhs), Log(self.rhs)).derivative(to)
 	
-	
-	#not yet done
 	@property
-	def imag(self):
+	def imag(self, **kwargs):
+		# WolframAlpha tells us Im(log(a+bi)) = Re(-ilog(a+bi))
 		from mul import Mul
-		return Mul(self.lhs.imag, self.rhs.imag)
+		return Mul(Const(-1j), self).real(kwargs)
 		
 	@property
-	def real(self):
-		from mul import Mul
-		return Mul(self.lhs.real, self.rhs.real)
-	#------------------------------
+	def real(self, **kwargs):
+		# WolframAlpha tells us Re(log(a+bi)) = log(a^2+b^2)/2
+		from pow import Pow
+		from add import Add
+		from div import Div
+		if (self.rhs.imag.__eq__(Const(0), kwargs)):
+			return Div(Log(Add(Pow(self.lhs.real(kwargs), Const(2)), Pow(self.lhs.imag(kwargs), Const(2)))), Const(2))
+		else:
+			return Div(Log(self.lhs), Log(self.rhs))
+			
 	def value(self, **kwargs):
 		return log(self.lhs.value(**kwargs), self.rhs.value(**kwargs))

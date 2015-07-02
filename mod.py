@@ -10,20 +10,22 @@ class Mod(Expr):
 		return Mod(self.lhs.__neg__(), self.rhs)
 		
 	def __repr__(self):
-		return "({})%({})".format(lhs, rhs)
+		return "({})%({})".format(self.lhs, self.rhs)
 		
 	def __str__(self):
-		return "({})%({})".format(lhs, rhs)
+		return "({})%({})".format(self.lhs, self.rhs)
 		
 	def __trunc__(self):
 		return self
 		
 	def conjugate(self):
-		return Mod(self.lhs.conjugate(), self.rhs.conjugate())
+		# Complex numbers don't support modulo, so we'll just assume both lhs and rhs are real.
+		return self
 		
 	@property
 	def imag(self):
-		return Mod(self.lhs.imag, self.rhs.imag)
+		from nserror import NotSupportedError
+		raise NotSupportedError("Complex numbers don't support modulo")
 		
 	@property
 	def real(self):
