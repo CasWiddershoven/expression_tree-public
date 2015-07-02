@@ -16,26 +16,26 @@ class Expr(object):
 	def __divmod__(self, other):
 		return Divmod(self, other)
 		
-	def __eq__(self, other):
-		return self.value() == other.value()
+	def __eq__(self, other, **kwargs):
+		return self.value(**kwargs) == other.value(**kwargs)
 		
-	def __float__(self):
-		return float(self.value())
+	def __float__(self, **kwargs):
+		return float(self.value(**kwargs))
 		
 	def __floordiv__(self, other):
 		return Floordiv(self, other)
 		
-	def __ge__(self, other):
-		return self.value() >= other.value()
+	def __ge__(self, other, **kwargs):
+		return self.value(**kwargs) >= other.value(**kwargs)
 		
-	def __gt__(self, other):
-		return self.value() > other.value()
+	def __gt__(self, other, **kwargs):
+		return self.value(**kwargs) > other.value(**kwargs)
 		
-	def __int__(self):
-		return int(self.value())
+	def __int__(self, **kwargs):
+		return int(self.value(**kwargs))
 		
-	def __le__(self, other):
-		return self.value() <= other.value()
+	def __le__(self, other, **kwargs):
+		return self.value(**kwargs) <= other.value(**kwargs)
 		
 	def __long__(self):
 		return long(self.value())
@@ -49,14 +49,14 @@ class Expr(object):
 	def __mul__(self, other):
 		return Mul(self, other)
 		
-	def __ne__(self, other):
-		return self.value() != other.value()
+	def __ne__(self, other, **kwargs):
+		return self.value(**kwargs) != other.value(**kwargs)
 		
-	def __neg__(self):
-		return Expr(str(-self.value()))
+	def __neg__(self, **kwargs):
+		return Expr(str(-self.value(**kwargs)))
 		
-	def __nonzero__(self):
-		return self.value() != 0
+	def __nonzero__(self, **kwargs):
+		return self.value(**kwargs) != 0
 		
 	def __pow__(self, other):
 		return Pow(self, other)
@@ -103,22 +103,22 @@ class Expr(object):
 	def __trunc__(self):
 		return Trunc(self)
 		
-	def as_integer_ratio(self):
-		return self.value().as_integer_ratio()
+	def as_integer_ratio(self, **kwargs):
+		return self.value(**kwargs).as_integer_ratio()
 		
-	def conjugate(self):
-		return Expr(str(self.value().conjugate()))
+	def conjugate(self, **kwargs):
+		return Expr(str(self.value(**kwargs).conjugate()))
 		
 	@property
-	def imag(self):
-		return Expr(str(self.value().imag))
+	def imag(self, **kwargs):
+		return Expr(str(self.value(**kwargs).imag))
 		
-	def is_integer(self):
-		return self.value().is_integer()
+	def is_integer(self, **kwargs):
+		return self.value(**kwargs).is_integer()
 	
 	@property
-	def real(self):
-		return Expr(str(self.value().real))
+	def real(self, **kwargs):
+		return Expr(str(self.value(**kwargs).real))
 	
-	def value(self):
+	def value(self, **kwargs):
 		return eval(self.expr)

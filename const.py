@@ -12,5 +12,5 @@ class Const(Expr):
 	def real(self):
 		return self.val.real
 		
-	def value(self):
+	def value(self, **kwargs):
 		return self.val

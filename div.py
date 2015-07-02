@@ -27,5 +27,5 @@ class Div(Expr):
 	def real(self):
 		return Add(self.lhs.real, self.rhs.real)
 		
-	def value(self):
-		return self.lhs.value() / self.rhs.value()
+	def value(self, **kwargs):
+		return self.lhs.value(**kwargs) / self.rhs.value(**kwargs)

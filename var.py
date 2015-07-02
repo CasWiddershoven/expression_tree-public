@@ -3,3 +3,8 @@ class Var(Expr):
 		super(Var, self).__init__(*args, **kwargs)
 		
 		self.key = key
+		
+	def value(self, **kwargs):
+		if kwargs is not None and self.key in kwargs.keys():
+			return kwargs[self.key]
+			

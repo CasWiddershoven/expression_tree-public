@@ -24,5 +24,5 @@ class FloorDiv(Expr):
 	def real(self):
 		return Add(self.lhs, self.rhs)
 		
-	def value(self):
-		return Floor(Div(self.lhs, self.rhs)).value()
+	def value(self, **kwargs):
+		return Floor(Div(self.lhs, self.rhs)).value(**kwargs)
