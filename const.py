@@ -8,6 +8,9 @@ class Const(Expr):
 	def imag(self):
 		return self.val.imag
 		
+	def derivative(self, to = "x")
+		return Const(0)
+		
 	@property
 	def real(self):
 		return self.val.real

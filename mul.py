@@ -19,8 +19,8 @@ class Mul(Expr):
 	def conjugate(self):
 		return Mul(self.lhs.conjugate(), self.rhs.conjugate())
 		
-	def derivative(self):
-		return Add(Mul(self.lhs.derivative(), self.rhs), Mul(self.lhs, self.rhs.derivative()))
+	def derivative(self, to = "x"):
+		return Add(Mul(self.lhs.derivative(to), self.rhs), Mul(self.lhs, self.rhs.derivative(to)))
 		
 	@property
 	def imag(self):

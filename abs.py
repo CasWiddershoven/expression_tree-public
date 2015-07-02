@@ -11,8 +11,8 @@ class Abs(Expr):
 	def __trunc__(self):
 		return Trunc(self)
 	
-	def derivative(self):
-		return Abs(self.expr.derivative())
+	def derivative(self, to = "x"):
+		return Abs(self.expr.derivative(to))
 		
 	@property
 	def imag(self):

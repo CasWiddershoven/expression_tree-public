@@ -17,10 +17,10 @@ class FloorDiv(Expr):
 		return self
 		
 	def conjugate(self):
-		return Trunc(Div(self.lhs, self.rhs).derivative())
+		return Trunc(Div(self.lhs, self.rhs).conjugate())
 		
-	def derivative(self):
-		return Trunc(Div(self.lhs, self.rhs).derivative())
+	def derivative(self, to = "x"):
+		return Trunc(Div(self.lhs, self.rhs).derivative(to))
 		
 
 	@property

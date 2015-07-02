@@ -19,8 +19,8 @@ class Div(Expr):
 	def conjugate(self):
 		return Div(self.lhs.conjugate(), self.rhs.conjugate())
 		
-	def derivative(self):
-		return Div(Sub(Mul(self.lhs.derivative(), self.rhs), Mul(self.rhs.derivative(), self.lhs)), Pow(self.rhs, Const(2)))
+	def derivative(self, to = "x"):
+		return Div(Sub(Mul(self.lhs.derivative(to), self.rhs), Mul(self.rhs.derivative(to), self.lhs)), Pow(self.rhs, Const(2)))
 		
 	@property
 	def imag(self):
