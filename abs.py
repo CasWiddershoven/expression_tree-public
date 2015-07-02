@@ -6,7 +6,10 @@ class Abs(Expr):
 		return "|({})|".format(self.expr)
 		
 	def __str__(self):
-		return "|({})|".format(self.
+		return "|({})|".format(self.expr)
+	
+	def __trunc__(self):
+		return Trunc(self)
 		
 	@property	
 	def value(self):
