@@ -1,13 +1,11 @@
-
+from expr import Expr
+from const import Const
 
 class Root(Expr):
 	def __init__(self, lhs, rhs = Const(2), *args, **kwargs):
 		super(Root, self).__init__(*args, **kwargs)
 		self.lhs = lhs
 		self.rhs = rhs
-		
-	def __neg__(self):
-		return Mul(const(-1), self)
 		
 	def __repr__(self):
 		if(rhs.value() == 2):
@@ -21,23 +19,26 @@ class Root(Expr):
 		else:
 			return "root_({})(({}))".format(rhs, lhs)
 		
-	def __trunc__(self):
-		return Trunc(self)
-		
 	def conjugate(self):
+		from mul import Mul
 		return Mul(self.lhs.conjugate(), self.rhs.conjugate())
 		
 	def derivative(self, to = "x"):
+		from pow import Pow
+		from div import Div
+		from const import Const
 		return Pow(self.lhs, Div(Const(1), self.rhs)).derivative()
 	
 	
 	#not yet done
 	@property
 	def imag(self):
+		from mul import Mul
 		return Mul(self.lhs.imag, self.rhs.imag)
 		
 	@property
 	def real(self):
+		from mul import Mul
 		return Mul(self.lhs.real, self.rhs.real)
 	#------------------------------
 	def value(self, **kwargs):

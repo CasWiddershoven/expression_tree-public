@@ -1,19 +1,23 @@
 class Expr(object):
-	def __init__(self, expr, *args, **kwargs):
+	def __init__(self, expr="", *args, **kwargs):
 		super(Expr, self).__init__(*args, **kwargs)
 		
 		self.expr = expr
 		
 	def __abs__(self):
+		from abs import Abs
 		return Abs(self)
 		
 	def __add__(self, other):
+		from add import Add
 		return Add(self, other)
 		
 	def __div__(self, other):
+		from div import Div
 		return Div(self, other)
 		
 	def __divmod__(self, other):
+		from divmod import Divmod
 		return Divmod(self, other)
 		
 	def __eq__(self, other, **kwargs):
@@ -23,7 +27,8 @@ class Expr(object):
 		return float(self.value(**kwargs))
 		
 	def __floordiv__(self, other):
-		return Floordiv(self, other)
+		from floordiv import FloorDiv
+		return FloorDiv(self, other)
 		
 	def __ge__(self, other, **kwargs):
 		return self.value(**kwargs) >= other.value(**kwargs)
@@ -44,63 +49,80 @@ class Expr(object):
 		return self.value() < other.value()
 		
 	def __mod__(self, other):
+		from mod import mod
 		return Mod(self, other)
 		
 	def __mul__(self, other):
+		from mul import Mul
 		return Mul(self, other)
 		
 	def __ne__(self, other, **kwargs):
 		return self.value(**kwargs) != other.value(**kwargs)
 		
 	def __neg__(self, **kwargs):
-		return Expr(str(-self.value(**kwargs)))
+		from mul import Mul
+		from const import Const
+		return Mul(Const(-1), self)
 		
 	def __nonzero__(self, **kwargs):
 		return self.value(**kwargs) != 0
 		
 	def __pow__(self, other):
+		from pow import Pow
 		return Pow(self, other)
 		
 	def __radd__(self, other):
+		from add import Add
 		return Add(other, self)
 		
 	def __rdiv__(self, other):
+		from div import Div
 		return Div(other, self)
 		
 	def __rdivmod__(self, other):
+		from divmod import Divmod
 		return Divmod(other, self)
 		
 	def __repr__(self, other):
 		return self.expr
 		
 	def __rfloordiv(self, other):
-		return Floordiv(other, self)
+		from floordiv import FloorDiv
+		return FloorDiv(other, self)
 		
 	def __rmod__(self, other):
+		from mod import Mod
 		return Mod(other, self)
 		
 	def __rmul__(self, other):
+		from mul import Mul
 		return Mul(other, self)
 		
 	def __rpow__(self, other):
+		from pow import Pow
 		return Pow(other, self)
 		
 	def __rsub__(self, other):
+		from sub import Sub
 		return Sub(other, self)
 		
 	def __rtruediv__(self, other):
+		from div import Div
 		return Div(other, self)
 		
 	def __str__(self):
 		return self.expr
 		
 	def __sub__(self, other):
+		from sub import Sub
 		return Sub(self, other)
 		
 	def __truediv__(self, other):
+		from div import Div
 		return Div(self, other)
 		
 	def __trunc__(self):
+		from trunc import Trunc
 		return Trunc(self)
 		
 	def as_integer_ratio(self, **kwargs):
@@ -122,3 +144,6 @@ class Expr(object):
 	
 	def value(self, **kwargs):
 		return eval(self.expr)
+		
+	def derivative(self, to = "x"):
+		raise NotImplementedError("Deriving black box expressions isn't supported!")

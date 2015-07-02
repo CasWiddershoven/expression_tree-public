@@ -1,3 +1,5 @@
+from expr import Expr
+
 class Abs(Expr):
 	def __init__(self, *args, **kwargs):
 		super(Abs, self).__init__(*args, **kwargs)
@@ -8,15 +10,16 @@ class Abs(Expr):
 	def __str__(self):
 		return "|({})|".format(self.expr)
 	
-	def __trunc__(self):
-		return Trunc(self)
-	
 	def derivative(self, to = "x"):
 		return Abs(self.expr.derivative(to))
 		
 	@property
 	def imag(self):
-		return Sqrt(Add(Pow(self.expr.imag(),Const(2)),(Pow(self.expr.real()),Const(2))))
+		from root import Root
+		from pow import Pow
+		from add import Add
+		from const import Const
+		return Root(Add(Pow(self.expr.imag(),Const(2)),(Pow(self.expr.real()),Const(2))))
 		
 	@property
 	def real(self):

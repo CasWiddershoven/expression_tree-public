@@ -1,3 +1,5 @@
+from expr import Expr
+
 class Sub(Expr):
 	def __init__(self, lhs, rhs, *args, **kwargs):
 		super(Sub, self).__init__(*args, **kwargs)
@@ -5,16 +7,13 @@ class Sub(Expr):
 		self.rhs = rhs
 		
 	def __neg__(self):
-		return Add(self.lhs.__neg__(), self.rhs)
+		return Sub(self.rhs, self.lhs)
 		
 	def __repr__(self):
 		return "({})-({})".format(self.lhs, self.rhs)
 		
 	def __str__(self):
 		return "({})-({})".format(self.lhs, self.rhs)
-		
-	def __trunc__(self):
-		return Trunc(self)
 		
 	def conjugate(self):
 		return Sub(self.lhs.conjugate(), self.rhs.conjugate())

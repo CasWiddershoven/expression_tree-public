@@ -1,3 +1,5 @@
+from expr import Expr
+
 class Add(Expr):
 	def __init__(self, lhs, rhs, *args, **kwargs):
 		super(Add, self).__init__(*args, **kwargs)
@@ -5,6 +7,7 @@ class Add(Expr):
 		self.rhs = rhs
 		
 	def __neg__(self):
+		from sub import Sub
 		return Sub(self.lhs.__neg__(), self.rhs)
 		
 	def __repr__(self):
@@ -12,9 +15,6 @@ class Add(Expr):
 		
 	def __str__(self):
 		return "({})+({})".format(lhs, rhs)
-		
-	def __trunc__(self):
-		return Trunc(self)
 		
 	def conjugate(self):
 		return Add(self.lhs.conjugate(), self.rhs.conjugate())

@@ -1,3 +1,5 @@
+from expr import Expr
+
 class Mul(Expr):
 	def __init__(self, lhs, rhs, *args, **kwargs):
 		super(Mul, self).__init__(*args, **kwargs)
@@ -13,13 +15,11 @@ class Mul(Expr):
 	def __str__(self):
 		return "({})*({})".format(lhs, rhs)
 		
-	def __trunc__(self):
-		return Trunc(self)
-		
 	def conjugate(self):
 		return Mul(self.lhs.conjugate(), self.rhs.conjugate())
 		
 	def derivative(self, to = "x"):
+		from add import Add
 		return Add(Mul(self.lhs.derivative(to), self.rhs), Mul(self.lhs, self.rhs.derivative(to)))
 		
 	@property

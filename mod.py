@@ -1,3 +1,5 @@
+from expr import Expr
+
 class Mod(Expr):
 	def __init__(self, lhs, rhs, *args, **kwargs):
 		super(Mod, self).__init__(*args, **kwargs)

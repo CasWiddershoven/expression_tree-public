@@ -1,3 +1,5 @@
+from expr import Expr
+
 from math import cos
 
 class Cos(Expr):
@@ -10,12 +12,12 @@ class Cos(Expr):
 	def __str__(self):
 		return "Cos({})".format(self.expr)
 	
-	def __trunc__(self):
-		return Trunc(self)
-		
 	def derivative(self, to = "x"):
-		return Mul(Mul(Const(-1), self.expr.derivative(to)), Sin(self.expr)__neg__())
+		from const import Const
+		from mul import Mul
+		from sin import Sin
+		return Mul(Mul(Const(-1), self.expr.derivative(to)), Sin(self.expr).__neg__())
 		
 	@property	
 	def value(self, **kwargs):
-		return  cos(self.expr.value(**kwargss))
+		return cos(self.expr.value(**kwargs))
