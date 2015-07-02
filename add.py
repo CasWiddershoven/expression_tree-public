@@ -1,11 +1,11 @@
 class Add(Expr):
 	def __init__(self, lhs, rhs, *args, **kwargs):
-		super(Add, self).__init__(*args, **kwargs
+		super(Add, self).__init__(*args, **kwargs)
 		self.lhs = lhs
 		self.rhs = rhs
 		
 	def __neg__(self):
-		return Sub(lhs.__neg__(), rhs)
+		return Sub(self.lhs.__neg__(), self.rhs)
 		
 	def __repr__(self):
 		return "({})+({})".format(lhs, rhs)
