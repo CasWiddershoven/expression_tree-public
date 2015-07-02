@@ -19,6 +19,9 @@ class Add(Expr):
 	def conjugate(self):
 		return Add(self.lhs.conjugate(), self.rhs.conjugate())
 		
+	def derivative(self):
+		return Add(self.lhs.derivative(), self.rhs.derivative())
+		
 	@property
 	def imag(self):
 		return Add(self.lhs.imag, self.rhs.imag)
