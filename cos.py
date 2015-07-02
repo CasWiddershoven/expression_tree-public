@@ -13,6 +13,9 @@ class Cos(Expr):
 	def __trunc__(self):
 		return Trunc(self)
 		
+	def derivative(self):
+		return Mul(Const(-1), Sin(self.expr)__neg__())
+		
 	@property	
 	def value(self):
 		return  cos(self.expr.value())

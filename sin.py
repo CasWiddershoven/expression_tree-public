@@ -12,6 +12,9 @@ class Sin(Expr):
 	
 	def __trunc__(self):
 		return Trunc(self)
+	
+	def derivative(self):
+		return Cos(self.expr)
 		
 	@property	
 	def value(self):

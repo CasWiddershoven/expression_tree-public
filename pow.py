@@ -18,6 +18,14 @@ class Pow(Expr):
 		
 	def conjugate(self):
 		return Pow(self.lhs.conjugate(), self.rhs.conjugate())
+	
+	def derivative(self):
+		if(self.lhs.isnumber()):
+			if(!self.rhs.isnumber()):
+		
+		if(self.rhs.isnumber()):
+			return Mul(self.lhs.derivative(), Pow(self.lhs, Sub(self.rhs, Const(1))))
+				
 		
 	@property
 	def imag(self):

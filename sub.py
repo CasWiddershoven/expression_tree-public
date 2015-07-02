@@ -18,6 +18,9 @@ class Sub(Expr):
 		
 	def conjugate(self):
 		return Sub(self.lhs.conjugate(), self.rhs.conjugate())
+	
+	def derivative():
+		return Sub(self.lhs.derivative(), self.rhs.derivative())
 		
 	@property
 	def imag(self):

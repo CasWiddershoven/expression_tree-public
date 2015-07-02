@@ -10,6 +10,17 @@ class Abs(Expr):
 	
 	def __trunc__(self):
 		return Trunc(self)
+	
+	def derivative(self):
+		return Abs(self.expr.derivative())
+		
+	@property
+	def imag(self):
+		return Sqrt(Add(Pow(self.expr.imag(),Const(2)),(Pow(self.expr.real()),Const(2))))
+		
+	@property
+	def real(self):
+		return imag(self)
 		
 	@property	
 	def value(self, **kwargs):
