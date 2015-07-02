@@ -1,4 +1,5 @@
 from math import e
+from math import log
 
 class Log(Expr):
 	def __init__(self, lhs, rhs = Const(math.e), *args, **kwargs):
@@ -51,4 +52,4 @@ class Log(Expr):
 		return Mul(self.lhs.real, self.rhs.real)
 	#------------------------------
 	def value(self, **kwargs):
-		return self.lhs.value(**kwargs) ** (1 / self.rhs.value(**kwargs))
+		return math.log(self.lhs.value(**kwargs), self.rhs.value(**kwargs))
