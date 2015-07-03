@@ -2,6 +2,9 @@ from expr import Expr
 
 class Const(Expr):
 	""" A constant value """
+	priority = 3
+	associativity = 0
+	
 	def __init__(self, val, *args, **kwargs):
 		super(Const, self).__init__(*args, **kwargs)
 		

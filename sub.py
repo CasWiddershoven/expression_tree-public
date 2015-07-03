@@ -1,6 +1,9 @@
 from expr import Expr
 
 class Sub(Expr):
+	priority = 0
+	associativity = -1
+	
 	def __init__(self, lhs, rhs, *args, **kwargs):
 		super(Sub, self).__init__(*args, **kwargs)
 		self.lhs = lhs
@@ -10,10 +13,26 @@ class Sub(Expr):
 		return Sub(self.rhs, self.lhs)
 		
 	def __repr__(self):
-		return "({})-({})".format(self.lhs, self.rhs)
+		if self.lhs.priority < self.priority:
+			lhs = "({})".format(self.lhs)
+		elif self.lhs.priority == self.priority and self.lhs.associativity == 1:
+			lhs = "({})".format(self.lhs)
+		elif self.lhs.priority == self.priority and self.associativity == 1:
+			lhs = "({})".format(self.lhs)
+		elif self.lhs.priority >= self.priority:
+			lhs = "{}".format(self.lhs)
+		if self.rhs.priority < self.priority:
+			rhs = "({})".format(self.rhs)
+		elif self.rhs.priority == self.priority and self.rhs.associativity == -1:
+			rhs = "({})".format(self.rhs)
+		elif self.rhs.priority == self.priority and self.associativity == -1:
+			rhs = "({})".format(self.rhs)
+		elif self.rhs.priority >= self.priority:
+			rhs = "{}".format(self.rhs)
+		return "{}-{}".format(lhs, rhs)
 		
 	def __str__(self):
-		return "({})-({})".format(self.lhs, self.rhs)
+		return self.__repr__()
 		
 	def conjugate(self):
 		return Sub(self.lhs.conjugate(), self.rhs.conjugate())

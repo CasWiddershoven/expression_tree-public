@@ -1,6 +1,9 @@
 from expr import Expr
 
 class Var(Expr):
+	priority = 3
+	associativity = 0
+	
 	def __init__(self, key, *args, **kwargs):
 		super(Var, self).__init__(*args, **kwargs)
 		

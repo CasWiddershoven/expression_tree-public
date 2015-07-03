@@ -3,6 +3,9 @@ from expr import Expr
 from cmath import cos # Support complex numbers
 
 class Cos(Expr):
+	priority = 3
+	associativity = 0
+	
 	def __init__(self, *args, **kwargs):
 		super(Cos, self).__init__(*args, **kwargs)
 		

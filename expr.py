@@ -1,4 +1,7 @@
 class Expr(object):
+	priority = -1
+	associativity = 0
+	
 	def __init__(self, expr="", *args, **kwargs):
 		super(Expr, self).__init__(*args, **kwargs)
 		

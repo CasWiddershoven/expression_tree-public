@@ -2,6 +2,9 @@ from expr import Expr
 from const import Const
 
 class Root(Expr):
+	priority = 2
+	associativity = 0
+	
 	def __init__(self, lhs, rhs = Const(2), *args, **kwargs):
 		super(Root, self).__init__(*args, **kwargs)
 		self.lhs = lhs
@@ -11,13 +14,10 @@ class Root(Expr):
 		if(self.rhs.value() == 2):
 			return "sqrt({})".format(self.lhs)
 		else:
-			return "root_({})(({}))".format(self.rhs, self.lhs)
+			return "root_({})({})".format(self.rhs, self.lhs)
 		
 	def __str__(self):
-		if(self.rhs.value() == 2):
-			return "sqrt({})".format(self.lhs)
-		else:
-			return "root_({})(({}))".format(self.rhs, self.lhs)
+		return self.__repr__()
 		
 	def derivative(self, to = "x"):
 		from pow import Pow

@@ -5,6 +5,9 @@ from math import e
 from math import log
 
 class Log(Expr):
+	priority = 3
+	associativity = 0
+	
 	def __init__(self, lhs, rhs = Const(e), *args, **kwargs):
 		super(Log, self).__init__(*args, **kwargs)
 		self.lhs = lhs
@@ -17,16 +20,10 @@ class Log(Expr):
 			return "ln({})".format(self.lhs)
 		if(self.rhs.value() == 10):
 			return "log({})".format(self.lhs) 
-		return "log_({})(({}))".format(self.rhs, self.lhs)
+		return "log_({})({})".format(self.rhs, self.lhs)
 		
 	def __str__(self):
-		if(self.rhs.value() == 2):
-			return "lg({})".format(self.lhs)
-		if(self.rhs.value() == e):
-			return "ln({})".format(self.lhs)
-		if(self.rhs.value() == 10):
-			return "log({})".format(self.lhs) 
-		return "log_({})(({}))".format(self.rhs, self.lhs)
+		return self.__repr__()
 		
 	def __trunc__(self):
 		from trunc import Trunc

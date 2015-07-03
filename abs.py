@@ -2,6 +2,9 @@ from expr import Expr
 
 class Abs(Expr):
 	""" The Absolute function: Abs: C -> R, |a+bi| = sqrt(a^2+b^2) """
+	priority = 3
+	associativity = 0
+	
 	def __init__(self, *args, **kwargs):
 		super(Abs, self).__init__(*args, **kwargs)
 		
@@ -16,10 +19,10 @@ class Abs(Expr):
 		return self.expr.__nonzero__(kwargs)
 		
 	def __repr__(self):
-		return "|({})|".format(self.expr)
+		return "|{}|".format(self.expr)
 		
 	def __str__(self):
-		return "|({})|".format(self.expr)
+		return "|{}|".format(self.expr)
 		
 	def conjugate(self):
 		return self
