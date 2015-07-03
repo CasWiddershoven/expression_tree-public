@@ -1,3 +1,5 @@
+#['__abs__', '__add__', '__div__', '__divmod__', '__eq__', '__float__', '__floordiv__', '__ge__', '__gt__', '__int__', '__le__', '__long__', '__lt__', '__mod__', '__mul__', '__ne__', '__neg__', '__nonzero__', '__pow__', '__radd__', '__rdiv__', '__rdivmod__', '__repr__', '__rfloordiv__', '__rmod__', '__rmul__', '__rpow__', '__rsub__', '__rtruediv__', '__str__', '__sub__', '__truediv__', '__trunc__', 'as_integer_ratio', 'conjugate', 'imag', 'is_integer', 'real']
+
 class Expr(object):
 	priority = -1
 	associativity = 0
