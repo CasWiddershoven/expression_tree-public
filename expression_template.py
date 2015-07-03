@@ -69,7 +69,7 @@ class Expression():
         output = []
         
         # list of operators
-        oplist = ['+']
+        oplist = ['+', '-']
         
         for token in tokens:
             if isnumber(token):
