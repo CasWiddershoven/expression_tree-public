@@ -14,20 +14,21 @@
 		funclist = ['(', 'sin(', 'cos(', 'tan(', 'abs(', 'derive(']
         
         for token in tokens:
+			#it can be a numer, which wil go in the output
             if isnumber(token):
-                # numbers go directly to the output
                 if isint(token):
                     output.append(Const(int(token)))
                 else:
                     output.append(Const(float(token)))
+			#it might be an operator
             elif token in oplist:
 				operator = operatorToken(token)
 				while(len(stack) != 0 and stack[-1].precedence() < operator.precedence()):
 					output.append(stack.pop().operator)
 				stack.append(operator)
+			#it might be a function
             elif token in funclist:
-                # left parentheses go to the stack
-                stack.append(token)
+                stack.append(operatorToken(token))
             elif token == ')':
                 # right parenthesis: pop everything upto the last left parenthesis to the output
                 while not stack[-1] in funclist:
@@ -36,8 +37,9 @@
 					output.append(stack.pop())
 				else:
 					stack.pop()
+			#else it's a variable
             else:
-                raise ValueError('Unknown token: %s' % token)
+                output.append(t)
             
         # pop any tokens still on the stack to the output
         while len(stack) > 0:
@@ -50,8 +52,10 @@
 		self.operator = operator
 		if(operator == '+' or operator == '-'):
 			self.precedence = 5
-		if(operator == '*' or operator == '/' or operator == '%'):
+		elif(operator == '*' or operator == '/' or operator == '%'):
 			self.precedence = 4
+		else:
+			self.precedence = 6
 			
 def tokenize(string):
     splitchars = ['+', '-', '*', '/', '(', ')', 'sin(', 'cos(', 'tan(', 'abs(', 'derive(']

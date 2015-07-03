@@ -14,8 +14,9 @@
 			elif t in funclist:
 				x = stack.pop()
 				stack.append(functiondict[t](x)
-			else:
+			elif isNumber(t):
 				stack.append(Const(toNumber(t)))
-				
+			else
+				stack.append(Var(t))
 		return stack.pop()
 		
