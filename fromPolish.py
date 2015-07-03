@@ -10,6 +10,7 @@ from root import Root
 from sin import Sin
 from sub import Sub
 from const import Const
+from var import Var
 oplist = ['+', '-', '*', '/', '%']
 funclist = ['(', 'sin(', 'cos(', 'tan(', 'abs(', 'derive(']
 functiondict = {'abs(' : Abs, '+' : Add, 'cos(' : Cos, '/' : Div,
@@ -21,9 +22,8 @@ def fromPolish(queue):
 	stack = []
 	for t in queue:
 		if isinstance(t, str) and t in oplist:
-			x = stack.pop()
 			y = stack.pop()
-			print x, t, y
+			x = stack.pop()
 			stack.append(functiondict[t](x, y))
 		elif isinstance(t, str) and t in funclist:
 			x = stack.pop()

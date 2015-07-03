@@ -55,7 +55,7 @@ def fromString(string):
 				stack.pop()
 		#else it's a variable
 		else:
-			output.append(t)
+			output.append(token)
 		
 	# pop any tokens still on the stack to the output
 	while len(stack) > 0:
@@ -74,16 +74,12 @@ def operatorToken(operator):
 	return operator, precedence
 			
 def tokenize(string):
-    splitchars = ['+', '-', '*', '/', '(', ')', 'sin(', 'cos(', 'tan(', 'abs(', 'derive(']
+    splitchars = ['+', '-', '*', '**', '/', '(', ')', 'sin(', 'cos(', 'abs(']
+    splitre = "(?P<op>(\+|-|\*|\*\*|/|\(|\)|sin\(|cos\(|abs\())"
+    from re import sub
     
     # surround any splitchar by spaces
-    tokenstring = []
-    for c in string:
-        if c in splitchars:
-            tokenstring.append(' %s ' % c)
-        else:
-            tokenstring.append(c)
-    tokenstring = ''.join(tokenstring)
+    tokenstring = sub(splitre, " \g<op> ", string)
     #split on spaces - this gives us our tokens
     tokens = tokenstring.split()
     
