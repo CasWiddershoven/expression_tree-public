@@ -11,8 +11,8 @@ from sin import Sin
 from sub import Sub
 from const import Const
 from var import Var
-oplist = ['+', '-', '*', '/', '%']
-funclist = ['(', 'sin(', 'cos(', 'tan(', 'abs(', 'derive(']
+oplist = ['+', '-', '*', '/', '%', '**']
+funclist = ['(', 'sin(', 'cos(', 'tan(', 'abs(', 'log(']
 functiondict = {'abs(' : Abs, '+' : Add, 'cos(' : Cos, '/' : Div,
 				'log(' : Log, '%' : Mod, '*' : Mul, '**' : Pow, 'root(' : Root,
 				'sin(' : Sin, '-' : Sub}

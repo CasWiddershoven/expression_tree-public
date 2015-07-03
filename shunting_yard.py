@@ -11,8 +11,8 @@ def fromString(string):
 	output = []
 	
 	# list of operators
-	oplist = ['+', '-', '*', '/', '%']
-	funclist = ['(', 'sin(', 'cos(', 'tan(', 'abs(', 'derive(']
+	oplist = ['+', '-', '*', '/', '%', '**']
+	funclist = ['(', 'sin(', 'cos(', 'abs(', 'log(']
 	
 	def isnumber(s):
 		try:
@@ -74,22 +74,25 @@ def operatorToken(operator):
 	return operator, precedence
 			
 def tokenize(string):
-    splitchars = ['+', '-', '*', '**', '/', '(', ')', 'sin(', 'cos(', 'abs(']
-    splitre = "(?P<op>(\+|-|\*|\*\*|/|\(|\)|sin\(|cos\(|abs\())"
-    from re import sub
-    
-    # surround any splitchar by spaces
-    tokenstring = sub(splitre, " \g<op> ", string)
-    #split on spaces - this gives us our tokens
-    tokens = tokenstring.split()
-    
-    #special casing for **:
-    ans = []
-    for t in tokens:
-        if len(ans) > 0 and t == ans[-1] == '*':
-            ans[-1] = '**'
-        else:
-            ans.append(t)
-    return ans
-    
+	from re import sub
+	string = sub("\)(?!(\+|-|$|\*|/|\)))", ")*", string)
+	splitchars = ['+', '-', '*', '**', '/', '(', ')', 'sin(', 'cos(', 'abs(', 'log(']
+	splitre = "(?P<op>(\+|-|\*\*|\*|/|\(|\)|sin\(|cos\(|abs\(|log\())"
+	
+	# surround any splitchar by spaces
+	tokenstring = sub(splitre, " \g<op> ", string)
+	#split on spaces - this gives us our tokens
+	tokens = tokenstring.split()
+	
+	#special casing for **:
+	#ans = []
+	#for t in tokens:
+	#	if len(ans) > 0 and t == ans[-1] == '*':
+	#		ans[-1] = '**'
+	#	else:
+	#		ans.append(t)
+	ans = tokens
+	return ans
+	
+
 		
