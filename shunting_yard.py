@@ -38,7 +38,7 @@ def fromString(string):
 		#it might be an operator
 		elif token in oplist:
 			operator, precedence = operatorToken(token)
-			while(len(stack) != 0 and stack[-1][1] < precedence):
+			while(len(stack) != 0 and stack[-1][1] > precedence):
 				output.append(stack.pop()[0])
 			stack.append([operator, precedence])
 		#it might be a function
@@ -66,9 +66,9 @@ def fromString(string):
 	
 def operatorToken(operator):
 	if(operator == '+' or operator == '-'):
-		precedence = 5
-	elif(operator == '*' or operator == '/' or operator == '%'):
 		precedence = 4
+	elif(operator == '*' or operator == '/' or operator == '%'):
+		precedence = 5
 	else:
 		precedence = 6
 	return operator, precedence
