@@ -1,7 +1,7 @@
 from expr import Expr
 
 class Var(Expr):
-	priority = 3
+	priority = 4
 	associativity = 0
 	
 	def __init__(self, key, *args, **kwargs):

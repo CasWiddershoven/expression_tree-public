@@ -34,28 +34,40 @@ class Pow(Expr):
 	def __str__(self):
 		return self.__repr__()
 	
-	#TODO: Add Expr.isnumber (make it Expr.isconst(to = "x")), add other cases
 	def derivative(self, to = "x"):
-		if(self.rhs.isnumber()):
-			from mul import Mul
-			from const import Const
-			return Mul(self.lhs.derivative(to), Pow(self.lhs, Sub(self.rhs, Const(1))))
+		# WolframAlpha tells us (d/dx)(f(x)^g(x)) = g(x)*f(x)^(g(x)-1)(df/dx)+f(x)^g(x)*log(f(x))*(dg/dx)
+		from add import Add
+		from mul import Mul
+		from log import Log
+		from sub import Sub
+		from const import Const
+		return Add(
+					Mul(
+						self.rhs, 
+						Mul(
+							Pow(
+								self.lhs, 
+								Sub(self.rhs, Const(1))), 
+							self.lhs.derivative(to))), 
+					Mul(self.rhs.derivative(to), Mul(self, Log(self.lhs))))
 			
 	def imagPart(self, **kwargs):
 		# a^(b+ci) = e^ln(a)^(b+ci) = a^b*e^(ln(a)*c)i = a^b*(cos(ln(a)*c)+isin(ln(a)*c))
 		from mul import Mul
 		from sin import Sin
 		from log import Log
+		from const import Const
 		if self.lhs.imagPart(**kwargs).__eq__(Const(0), **kwargs):
 			return Mul(Pow(self.lhs, self.rhs.realPart(**kwargs)), Sin(Mul(Log(self.lhs), self.rhs.imagPart(**kwargs))))
 		else:
 			raise NotImplementedError("We haven't implemented getting the imaginary part of a power of a complex number yet.")
 		
-	def realPart(self):
+	def realPart(self, **kwargs):
 		# a^(b+ci) = e^ln(a)^(b+ci) = a^b*e^(ln(a)*c)i = a^b*(cos(ln(a)*c)+isin(ln(a)*c))
 		from mul import Mul
 		from cos import Cos
 		from log import Log
+		from const import Const
 		if self.lhs.imagPart(**kwargs).__eq__(Const(0), **kwargs):
 			return Mul(Pow(self.lhs, self.rhs.realPart(**kwargs)), Cos(Mul(Log(self.lhs), self.rhs.imagPart(**kwargs))))
 		else:

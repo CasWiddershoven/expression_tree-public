@@ -2,7 +2,7 @@ from expr import Expr
 
 class Const(Expr):
 	""" A constant value """
-	priority = 3
+	priority = 4
 	associativity = 0
 	
 	def __init__(self, val, *args, **kwargs):

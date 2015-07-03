@@ -11,10 +11,12 @@ class Root(Expr):
 		self.rhs = rhs
 		
 	def __repr__(self):
-		if(self.rhs.value() == 2):
-			return "sqrt({})".format(self.lhs)
-		else:
-			return "root_({})({})".format(self.rhs, self.lhs)
+		try:
+			if(self.rhs.value() == 2):
+				return "sqrt({})".format(self.lhs)
+		except UnboundLocalError:
+			pass
+		return "root_({})({})".format(self.rhs, self.lhs)
 		
 	def __str__(self):
 		return self.__repr__()
@@ -32,7 +34,7 @@ class Root(Expr):
 		from div import Div
 		return Pow(self.lhs, Div(Const(1), self.rhs)).imagPart(**kwargs)
 		
-	def realPart(self):
+	def realPart(self, **kwargs):
 		from pow import Pow
 		from const import Const
 		from div import Div

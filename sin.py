@@ -1,6 +1,6 @@
 from expr import Expr
 
-from math import sin
+from cmath import sin
 
 class Sin(Expr):
 	priority = 3
@@ -21,6 +21,7 @@ class Sin(Expr):
 		from sub import Sub
 		from mul import Mul
 		from pow import Pow
+		from div import Div
 		from const import Const
 		
 		from math import e
@@ -32,6 +33,7 @@ class Sin(Expr):
 		from sin import Sin
 		from mul import Mul
 		from pow import Pow
+		from div import Div
 		from const import Const
 		
 		from math import e
