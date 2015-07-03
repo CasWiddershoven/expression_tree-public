@@ -15,28 +15,28 @@ class Cos(Expr):
 	def __str__(self):
 		return "Cos({})".format(self.expr)
 		
-	@property
-	def imag(self, **kwargs):
+	def imagPart(self, **kwargs):
 		# cos(a+bi) = cos(a)cosh(b)-isin(a)sinh(b) where cosh = exp(x)+exp(-x)/2 and sinh = exp(x)-exp(-x)/2
 		from sin import Sin
 		from sub import Sub
 		from mul import Mul
 		from pow import Pow
+		from div import Div
 		from const import Const
 		
 		from math import e
-		return Mul(Sin(self.expr.real), Div(Sub(Pow(Const(e), self.expr.imag), Pow(Const(e), -self.expr.imag)), Const(2)))
+		return Mul(Sin(self.expr.realPart(**kwargs)), Div(Sub(Pow(Const(e), self.expr.imagPart(**kwargs)), Pow(Const(e), -self.expr.imagPart(**kwargs))), Const(2)))
 		
-	@property
-	def real(self, **kwargs):
+	def realPart(self, **kwargs):
 		# cos(a+bi) = cos(a)cosh(b)-isin(a)sinh(b) where cosh = exp(x)+exp(-x)/2 and sinh = exp(x)-exp(-x)/2
 		from add import Add
+		from div import Div
 		from mul import Mul
 		from pow import Pow
 		from const import Const
 		
 		from math import e
-		return Mul(Cos(self.expr.real), Div(Add(Pow(Const(e), self.expr.imag), Pow(Const(e), -self.expr.imag)), Const(2)))
+		return Mul(Cos(self.expr.realPart(**kwargs)), Div(Add(Pow(Const(e), self.expr.imagPart(**kwargs)), Pow(Const(e), -self.expr.imagPart(**kwargs))), Const(2)))
 	
 	def value(self, **kwargs):
 		return cos(self.expr.value(**kwargs))
@@ -45,4 +45,4 @@ class Cos(Expr):
 		from const import Const
 		from mul import Mul
 		from sin import Sin
-		return Mul(Mul(Const(-1), self.expr.derivative(to)), Sin(self.expr).__neg__())
+		return Mul(self.expr.derivative(to), -Sin(self.expr))

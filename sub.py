@@ -40,13 +40,11 @@ class Sub(Expr):
 	def derivative(self, to = "x"):
 		return Sub(self.lhs.derivative(to), self.rhs.derivative(to))
 		
-	@property
-	def imag(self):
-		return Sub(self.lhs.imag, self.rhs.imag)
+	def imagPart(self, **kwargs):
+		return Sub(self.lhs.imagPart(**kwargs), self.rhs.imagPart(**kwargs))
 		
-	@property
-	def real(self):
-		return Sub(self.lhs.real, self.rhs.real)
+	def realPart(self, **kwargs):
+		return Sub(self.lhs.realPart(**kwargs), self.rhs.realPart(**kwargs))
 		
 	def value(self, **kwargs):
 		return self.lhs.value(**kwargs) - self.rhs.value(**kwargs)

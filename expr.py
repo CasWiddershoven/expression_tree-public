@@ -24,7 +24,7 @@ class Expr(object):
 		return Divmod(self, other)
 		
 	def __eq__(self, other, **kwargs):
-		return self.value(**kwargs) == other.value(**kwargs)
+		return (self.value(**kwargs) == other.value(**kwargs))
 		
 	def __float__(self, **kwargs):
 		return float(self.value(**kwargs))
@@ -34,22 +34,22 @@ class Expr(object):
 		return FloorDiv(self, other)
 		
 	def __ge__(self, other, **kwargs):
-		return not self.__lt__(other, kwargs)
+		return (not self.__lt__(other, **kwargs))
 		
 	def __gt__(self, other, **kwargs):
-		return not self.__le__(other, kwargs)
+		return (not self.__le__(other, **kwargs))
 		
 	def __int__(self, **kwargs):
 		return int(self.value(**kwargs))
 		
 	def __le__(self, other, **kwargs):
-		return self.__lt__(other, kwargs) or self.__eq__(other, kwargs)
+		return (self.__lt__(other, **kwargs) or self.__eq__(other, **kwargs))
 		
 	def __long__(self, **kwargs):
 		return long(self.value(**kwargs))
 		
 	def __lt__(self, other, **kwargs):
-		return self.value(**kwargs) < other.value(**kwargs)
+		return (self.value(**kwargs) < other.value(**kwargs))
 		
 	def __mod__(self, other):
 		from mod import mod
@@ -60,7 +60,7 @@ class Expr(object):
 		return Mul(self, other)
 		
 	def __ne__(self, other, **kwargs):
-		return not self.__eq__(other, kwargs)
+		return (not self.__eq__(other, **kwargs))
 		
 	def __neg__(self, **kwargs):
 		from mul import Mul
@@ -133,17 +133,23 @@ class Expr(object):
 		
 	def conjugate(self, **kwargs):
 		from mul import Mul
-		return self - Mul(self.imag(kwargs), Const(2))
+		return self - Mul(self.imagPart(**kwargs), Const(2))
 		
 	@property
-	def imag(self, **kwargs):
+	def imag(self):
+		return self.imagPart()
+		
+	def imagPart(self, **kwargs):
 		return Expr(str(self.value(**kwargs).imag))
 		
 	def is_integer(self, **kwargs):
 		return self.value(**kwargs).is_integer()
 	
 	@property
-	def real(self, **kwargs):
+	def real(self):
+		return self.realPart()
+		
+	def realPart(self, **kwargs):
 		return Expr(str(self.value(**kwargs).real))
 	
 	def value(self, **kwargs):

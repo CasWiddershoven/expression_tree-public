@@ -41,15 +41,13 @@ class Mul(Expr):
 		from add import Add
 		return Add(Mul(self.lhs.derivative(to), self.rhs), Mul(self.lhs, self.rhs.derivative(to)))
 		
-	@property
-	def imag(self, **kwargs):
+	def imagPart(self, **kwargs):
 		from add import Add
-		return Add(Mul(self.lhs.imag(kwargs), self.rhs.real(kwargs)), Mul(self.lhs.real(kwargs), self.rhs.imag(kwargs)))
+		return Add(Mul(self.lhs.imagPart(**kwargs), self.rhs.realPart(**kwargs)), Mul(self.lhs.realPart(**kwargs), self.rhs.imagPart(**kwargs)))
 		
-	@property
-	def real(self, **kwargs):
+	def realPart(self, **kwargs):
 		from sub import Sub
-		return Sub(Mul(self.lhs.real(kwargs), self.rhs.real(kwargs)), Mul(self.lhs.imag(kwargs), self.rhs.imag(kwargs)))
+		return Sub(Mul(self.lhs.realPart(**kwargs), self.rhs.realPart(**kwargs)), Mul(self.lhs.imagPart(**kwargs), self.rhs.imagPart(**kwargs)))
 		
 	def value(self, **kwargs):
 		return self.lhs.value(**kwargs) * self.rhs.value(**kwargs)

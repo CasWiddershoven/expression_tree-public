@@ -18,18 +18,16 @@ class Trunc(Expr):
 		return self
 		
 	def conjugate(self, **kwargs):
-		return Trunc(self.expr.conjugate(kwargs))
+		return Trunc(self.expr.conjugate(**kwargs))
 
-	@property
-	def imag(self, **kwargs):
-		return Trunc(self.expr.imag(kwargs))
+	def imagPart(self, **kwargs):
+		return Trunc(self.expr.imagPart(**kwargs))
 
-	@property
-	def real(self, **kwargs):
-		return Trunc(self.expr.real(kwargs))
+	def realPart(self, **kwargs):
+		return Trunc(self.expr.realPart(**kwargs))
 		
 	def value(self, **kwargs):
-		val = self.expr.value(kwargs)
+		val = self.expr.value(**kwargs)
 		return floor(val.real) + floor(val.imag)*1j
 	
 	def derivative(self, to = "x"):

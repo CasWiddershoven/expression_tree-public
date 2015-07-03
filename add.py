@@ -16,9 +16,10 @@ class Add(Expr):
 		
 	def __nonzero__(self, **kwargs):
 		from mul import Mul
-		return (Mul(self.lhs, self.rhs).__gt__(Const(0), kwargs) or
+		from const import Const
+		return (Mul(self.lhs, self.rhs).__gt__(Const(0), **kwargs) or
 					self.lhs.__ne__(-self.rhs, **kwargs) or 
-					(self.lhs.__nonzero__(kwargs) != self.rhs.__nonzero__(kwargs)))
+					(self.lhs.__nonzero__(**kwargs) != self.rhs.__nonzero__(**kwargs)))
 		
 	def __repr__(self):
 		if self.lhs.priority < self.priority:
@@ -45,13 +46,11 @@ class Add(Expr):
 	def conjugate(self):
 		return Add(self.lhs.conjugate(), self.rhs.conjugate())
 		
-	@property
-	def imag(self, **kwargs):
-		return Add(self.lhs.imag(kwargs), self.rhs.imag(kwargs))
+	def imagPart(self, **kwargs):
+		return Add(self.lhs.imagPart(**kwargs), self.rhs.imagPart(**kwargs))
 		
-	@property
-	def real(self, **kwargs):
-		return Add(self.lhs.real(kwargs), self.rhs.real(kwargs))
+	def realPart(self, **kwargs):
+		return Add(self.lhs.realPart(**kwargs), self.rhs.realPart(**kwargs))
 		
 	def value(self, **kwargs):
 		return self.lhs.value(**kwargs) + self.rhs.value(**kwargs)

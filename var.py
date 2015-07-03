@@ -22,7 +22,8 @@ class Var(Expr):
 			raise UnboundLocalError("Tried to find the value of the variable {}, but no value has been set.".format(self.key))
 
 	def derivative(self, to = "x"):
+		from const import Const
 		if to == self.key:
-			return 1
+			return Const(1)
 		else:
-			return 0
+			return Const(0)

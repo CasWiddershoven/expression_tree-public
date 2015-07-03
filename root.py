@@ -26,19 +26,17 @@ class Root(Expr):
 		return Pow(self.lhs, Div(Const(1), self.rhs)).derivative()
 	
 	# Done simply, but ugly (and probably terribly slow)
-	@property
-	def imag(self, **kwargs):
+	def imagPart(self, **kwargs):
 		from pow import Pow
 		from const import Const
 		from div import Div
-		return Pow(self.lhs, Div(Const(1), self.rhs)).imag(kwargs)
+		return Pow(self.lhs, Div(Const(1), self.rhs)).imagPart(**kwargs)
 		
-	@property
-	def real(self):
+	def realPart(self):
 		from pow import Pow
 		from const import Const
 		from div import Div
-		return Pow(self.lhs, Div(Const(1), self.rhs)).real(kwargs)
+		return Pow(self.lhs, Div(Const(1), self.rhs)).realPart(**kwargs)
 		
 	def value(self, **kwargs):
 		return self.lhs.value(**kwargs) ** (1 / self.rhs.value(**kwargs))

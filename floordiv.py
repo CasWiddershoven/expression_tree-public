@@ -9,10 +9,8 @@ class FloorDiv(Expr):
 		self.lhs = lhs
 		self.rhs = rhs
 		
-	def __neg__(self):
-		return FloorDiv(self.lhs.__neg__(), self.rhs)
-		
 	def __repr__(self):
+		from div import Div
 		if self.lhs.priority < Div.priority:
 			lhs = "({})".format(self.lhs)
 		elif self.lhs.priority == Div.priority and self.lhs.associativity == 1:
@@ -36,21 +34,16 @@ class FloorDiv(Expr):
 		
 	def __trunc__(self):
 		return self
-		
-	def conjugate(self):
-		return FloorDiv(self.lhs.conjugate(), self.rhs.conjugate())
 
-	@property
-	def imag(self, **kwargs):
+	def imagPart(self, **kwargs):
 		from div import Div
 		from trunc import Trunc
-		return Trunc(Div(self.lhs, self.rhs).imag(kwargs))
+		return Trunc(Div(self.lhs, self.rhs).imagPart(**kwargs))
 
-	@property
-	def real(self, **kwargs):
+	def realPart(self, **kwargs):
 		from div import Div
 		from trunc import Trunc
-		return Trunc(Div(self.lhs, self.rhs).real(kwargs))
+		return Trunc(Div(self.lhs, self.rhs).realPart(**kwargs))
 		
 	def value(self):
 		from trunc import Trunc

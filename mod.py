@@ -41,14 +41,12 @@ class Mod(Expr):
 		# Complex numbers don't support modulo, so we'll just assume both lhs and rhs are real.
 		return self
 		
-	@property
-	def imag(self):
+	def imagPart(self, **kwargs):
 		from nserror import NotSupportedError
 		raise NotSupportedError("Complex numbers don't support modulo")
 		
-	@property
-	def real(self):
-		return Mod(self.lhs.real, self.rhs.real)
+	def realPart(self, **kwargs):
+		return Mod(self.lhs.realPart(**kwargs), self.rhs.realPart(**kwargs))
 		
 	def value(self, **kwargs):
 		return self.lhs.value(**kwargs) % self.rhs.value(**kwargs)

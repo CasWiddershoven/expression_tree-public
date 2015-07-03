@@ -15,8 +15,7 @@ class Sin(Expr):
 	def __str__(self):
 		return "Sin({})".format(self.expr)
 		
-	@property
-	def imag(self, **kwargs):
+	def imagPart(self, **kwargs):
 		# sin(a+bi) = sin(a)cosh(b)-icos(a)sinh(b) where cosh = exp(x)+exp(-x)/2 and sinh = exp(x)-exp(-x)/2
 		from cos import Cos
 		from sub import Sub
@@ -25,10 +24,9 @@ class Sin(Expr):
 		from const import Const
 		
 		from math import e
-		return Mul(Cos(self.expr.real), Div(Sub(Pow(Const(e), self.expr.imag), Pow(Const(e), -self.expr.imag)), Const(2)))
+		return Mul(Cos(self.expr.realPart(**kwargs)), Div(Sub(Pow(Const(e), self.expr.imagPart(**kwargs)), Pow(Const(e), -self.expr.imagPart(**kwargs))), Const(2)))
 		
-	@property
-	def real(self, **kwargs):
+	def realPart(self, **kwargs):
 		# sin(a+bi) = sin(a)cosh(b)-icos(a)sinh(b) where cosh = exp(x)+exp(-x)/2 and sinh = exp(x)-exp(-x)/2
 		from add import Add
 		from sin import Sin
@@ -37,9 +35,8 @@ class Sin(Expr):
 		from const import Const
 		
 		from math import e
-		return Mul(Sin(self.expr.real), Div(Add(Pow(Const(e), self.expr.imag), Pow(Const(e), -self.expr.imag)), Const(2)))
+		return Mul(Sin(self.expr.realPart(**kwargs)), Div(Add(Pow(Const(e), self.expr.imagPart(**kwargs)), Pow(Const(e), -self.expr.imagPart(**kwargs))), Const(2)))
 		
-	@property	
 	def value(self, **kwargs):
 		return sin(self.expr.value(**kwargs))
 	

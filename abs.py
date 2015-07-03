@@ -9,14 +9,15 @@ class Abs(Expr):
 		super(Abs, self).__init__(*args, **kwargs)
 		
 	def __eq__(self, other, **kwargs):
-		return self.expr == other.expr or -self.expr == other.expr
+		return self.expr == other or -self.expr == other
 		
 	def __lt__(self, other, **kwargs):
-		return (self.expr.__gt__(Const(0), kwargs) and self.expr.__lt__(other, kwargs))
-				or (self.expr.__lt__(Const(0), kwargs) and -self.expr.__lt__(other, kwargs))
+		from const import Const
+		return ((self.expr.__gt__(Const(0), **kwargs) and self.expr.__lt__(other, **kwargs)) or
+				(self.expr.__lt__(Const(0), **kwargs) and (-self.expr).__lt__(other, **kwargs)))
 				
 	def __nonzero__(self, **kwargs):
-		return self.expr.__nonzero__(kwargs)
+		return self.expr.__nonzero__(**kwargs)
 		
 	def __repr__(self):
 		return "|{}|".format(self.expr)
@@ -27,14 +28,12 @@ class Abs(Expr):
 	def conjugate(self):
 		return self
 		
-	@property
-	def imag(self, **kwargs):
+	def imagPart(self, **kwargs):
 		# |a+b*i| = sqrt(a^2+b^2), so imag(sqrt(a^2+b^2)) = 0
 		from const import Const
 		return Const(0)
 		
-	@property
-	def real(self, **kwargs):
+	def realPart(self, **kwargs):
 		return self.value(**kwargs)
 			
 	def value(self, **kwargs):

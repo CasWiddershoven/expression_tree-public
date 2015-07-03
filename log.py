@@ -2,7 +2,7 @@ from expr import Expr
 from const import Const
 
 from math import e
-from math import log
+from cmath import log
 
 class Log(Expr):
 	priority = 3
@@ -14,12 +14,15 @@ class Log(Expr):
 		self.rhs = rhs
 		
 	def __repr__(self):
-		if(self.rhs.value() == 2):
-			return "lg({})".format(self.lhs)
-		if(self.rhs.value() == e):
-			return "ln({})".format(self.lhs)
-		if(self.rhs.value() == 10):
-			return "log({})".format(self.lhs) 
+		try:
+			if(self.rhs.value() == 2):
+				return "lg({})".format(self.lhs)
+			if(self.rhs.value() == e):
+				return "ln({})".format(self.lhs)
+			if(self.rhs.value() == 10):
+				return "log({})".format(self.lhs) 
+		except UnboundLocalError:
+			pass
 		return "log_({})({})".format(self.rhs, self.lhs)
 		
 	def __str__(self):
@@ -31,27 +34,28 @@ class Log(Expr):
 	
 	def derivative(self, to = "x"):
 		from div import Div
-		if(self.rhs.value() == e):
-			from mul import Mul
-			return Div(self.lhs.derivative(to), self.lhs)
+		try:
+			if(self.rhs.value() == e):
+				from mul import Mul
+				return Div(self.lhs.derivative(to), self.lhs)
+		except UnboundLocalError:
+			pass
 		return Div(Log(self.lhs), Log(self.rhs)).derivative(to)
 	
-	@property
-	def imag(self, **kwargs):
-		# WolframAlpha tells us Im(log(a+bi)) = Re(-ilog(a+bi))
-		from mul import Mul
-		return Mul(Const(-1j), self).real(kwargs)
+	def imagPart(self, **kwargs):
+		from div import Div
+		from sub import Sub
+		return Div(Sub(self, self.realPart(**kwargs)), Const(1j))
 		
-	@property
-	def real(self, **kwargs):
+	def realPart(self, **kwargs):
 		# WolframAlpha tells us Re(log(a+bi)) = log(a^2+b^2)/2
 		from pow import Pow
 		from add import Add
 		from div import Div
-		if (self.rhs.imag.__eq__(Const(0), kwargs)):
-			return Div(Log(Add(Pow(self.lhs.real(kwargs), Const(2)), Pow(self.lhs.imag(kwargs), Const(2)))), Const(2))
+		if (self.rhs.imagPart(**kwargs).__eq__(Const(0), **kwargs)):
+			return Div(Log(Add(Pow(self.lhs.realPart(**kwargs), Const(2)), Pow(self.lhs.imagPart(**kwargs), Const(2)))), Const(2))
 		else:
-			return Div(Log(self.lhs), Log(self.rhs))
+			return Div(Log(self.lhs), Log(self.rhs)).realPart(**kwargs)
 			
 	def value(self, **kwargs):
 		return log(self.lhs.value(**kwargs), self.rhs.value(**kwargs))
