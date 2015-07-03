@@ -9,10 +9,25 @@ class Abs(Expr):
 		super(Abs, self).__init__(*args, **kwargs)
 		
 	def __eq__(self, other, **kwargs):
+		from const import Const
+		from numbers import Number
+		if not isinstance(other, Expr):
+			if isinstance(other, str):
+				other = Const(eval(other))
+			elif isinstance(other, Number):
+				other = Const(other)
+				
 		return self.expr == other or -self.expr == other
 		
 	def __lt__(self, other, **kwargs):
 		from const import Const
+		from numbers import Number
+		if not isinstance(other, Expr):
+			if isinstance(other, str):
+				other = Const(eval(other))
+			elif isinstance(other, Number):
+				other = Const(other)
+				
 		return ((self.expr.__gt__(Const(0), **kwargs) and self.expr.__lt__(other, **kwargs)) or
 				(self.expr.__lt__(Const(0), **kwargs) and (-self.expr).__lt__(other, **kwargs)))
 				

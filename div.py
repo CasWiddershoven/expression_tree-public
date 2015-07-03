@@ -13,6 +13,14 @@ class Div(Expr):
 		return Div(self.lhs.__neg__(), self.rhs)
 		
 	def __eq__(self, other, **kwargs):
+		from const import Const
+		from numbers import Number
+		if not isinstance(other, Expr):
+			if isinstance(other, str):
+				other = Const(eval(other))
+			elif isinstance(other, Number):
+				other = Const(other)
+				
 		return self.lhs.__eq__(Mul(self.rhs, other), **kwargs)
 		
 	def __repr__(self):
