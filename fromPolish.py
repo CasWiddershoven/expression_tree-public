@@ -16,4 +16,6 @@
 				stack.append(functiondict[t](x)
 			else:
 				stack.append(Const(toNumber(t)))
+				
+		return stack.pop()
 		
