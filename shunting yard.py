@@ -11,7 +11,7 @@
         
         # list of operators
         oplist = ['+', '-', '*', '/', '%']
-		funclist = ['(', 'sin(', 'cos(', 'tan(']
+		funclist = ['(', 'sin(', 'cos(', 'tan(', 'abs(', 'derive(']
         
         for token in tokens:
             if isnumber(token):
@@ -50,6 +50,30 @@
 		self.operator = operator
 		if(operator == '+' or operator == '-'):
 			self.precedence = 5
-		if(operator == '*' or operator == '/' or operator == '%')
+		if(operator == '*' or operator == '/' or operator == '%'):
 			self.precedence = 4
+			
+def tokenize(string):
+    splitchars = ['+', '-', '*', '/', '(', ')', 'sin(', 'cos(', 'tan(', 'abs(', 'derive(']
+    
+    # surround any splitchar by spaces
+    tokenstring = []
+    for c in string:
+        if c in splitchars:
+            tokenstring.append(' %s ' % c)
+        else:
+            tokenstring.append(c)
+    tokenstring = ''.join(tokenstring)
+    #split on spaces - this gives us our tokens
+    tokens = tokenstring.split()
+    
+    #special casing for **:
+    ans = []
+    for t in tokens:
+        if len(ans) > 0 and t == ans[-1] == '*':
+            ans[-1] = '**'
+        else:
+            ans.append(t)
+    return ans
+    
 		
